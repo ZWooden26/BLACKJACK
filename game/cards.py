@@ -3,6 +3,9 @@ import sys
 from parameters import *
 import random
 
+pygame.init()
+
+# lists of all possible values and suits to choose from
 values = ['02', '03', '04', '05', '06', '07', '08', '09', '10', 'J', 'Q', 'K', 'A']
 suits = ['clubs', 'diamonds', 'spades', 'hearts']
 
