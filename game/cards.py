@@ -1,5 +1,4 @@
 import pygame
-import sys
 from parameters import *
 import random
 
@@ -26,3 +25,12 @@ class Cards(pygame.sprite.Sprite):
         self.image = pygame.image.load(f"../Assets/cards/card_{self.suit}_{self.value}.png").convert()
         self.image.set_colorkey((0, 0, 0))
         self.rect = self.image.get_rect()
+
+    def card_num(self):
+        if self.value == 'J' or 'Q' or 'K':
+            card_number = 10
+        elif self.value == 'A':
+            card_number = 11
+        else:
+            card_number = int(self.value)
+        return card_number
