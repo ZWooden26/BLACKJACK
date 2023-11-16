@@ -17,6 +17,7 @@ def get_suit():
     num = random.randint(0, len(suits)-1)
     return suits[num]
 
+
 class Cards(pygame.sprite.Sprite):
     def __init__(self, suit='spades', value='A'):
         super().__init__()
@@ -25,7 +26,3 @@ class Cards(pygame.sprite.Sprite):
         self.image = pygame.image.load(f"../Assets/cards/card_{self.suit}_{self.value}.png").convert()
         self.image.set_colorkey((0, 0, 0))
         self.rect = self.image.get_rect()
-
-for _ in range(10):
-    card = Cards(get_suit(), get_value())
-    print(f"{card.suit}, {card.value}")

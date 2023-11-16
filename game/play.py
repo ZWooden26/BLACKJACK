@@ -8,7 +8,7 @@ from cards import get_suit, get_value, Cards
 pygame.init()
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Blackjack woohoo")
+pygame.display.set_caption("Blackjack")
 
 # sounds
 
