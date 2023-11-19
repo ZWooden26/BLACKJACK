@@ -1,12 +1,12 @@
 import pygame
-import sys
 from parameters import *
+from cards import Cards, get_suit, get_value
 
+cardback = pygame.image.load('../Assets/cards/card_back.png').convert()
 
 def draw_background(screen):
     # initializing images and fonts
     table = pygame.image.load('../Assets/table1.jpg').convert()
-    cardback = pygame.image.load('../Assets/cards/card_back.png').convert()
     chip = pygame.image.load('../Assets/chip.png').convert()
     cardback.set_colorkey((0, 0, 0))
     chip.set_colorkey((255, 255, 255))
@@ -33,3 +33,10 @@ def draw_background(screen):
     screen.blit(score_text, (WIDTH - 200, HEIGHT - 100))
     screen.blit(player_text, (WIDTH/2 - player_text.get_width()/2, 550))
     screen.blit(house_text, (WIDTH/2 - house_text.get_width()/2, 50))
+
+def show_house():
+    house1 = Cards(get_suit(), get_value())
+    house2 = Cards(get_suit(), get_value())
+    screen.blit(house1.image, (HOUSEx - card_size, HOUSEy))
+    screen.blit(cardback, (HOUSEx, HOUSEy))
+    pygame.display.flip()

@@ -2,7 +2,7 @@ import pygame
 import sys
 import time
 from parameters import *
-from background import draw_background
+from background import draw_background, show_house
 from cards import get_suit, get_value, Cards
 
 # initialize
@@ -25,14 +25,9 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        if event.type == pygame.KEYUP:
+        elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                house1 = Cards(get_suit(), get_value())
-                house2 = Cards(get_suit(), get_value())
-                screen.blit(house1.image, (HOUSEx - card_size, HOUSEy))
-                screen.blit(cardback, (HOUSEx, HOUSEy))
-
-    pygame.display.flip()
+                show_house()
 
 pygame.quit()
 sys.exit()
