@@ -2,6 +2,9 @@ import pygame
 from parameters import *
 from cards import Cards, get_suit, get_value
 
+pygame.init()
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+
 cardback = pygame.image.load('../Assets/cards/card_back.png').convert()
 
 def draw_background(screen):
@@ -37,20 +40,20 @@ def draw_background(screen):
 def get_house():
     house1 = Cards(get_suit(), get_value())
     house2 = Cards(get_suit(), get_value())
-    house_value = int(house1.card_num) + int(house2.card_num)
+    h1 = house1.card_num()
+    h2 = house2.card_num()
     screen.blit(house1.image, (HOUSEx - card_size, HOUSEy))
     screen.blit(cardback, (HOUSEx, HOUSEy))
-    pygame.display.flip()
-    return house_value
+    return h1 + h2
 
 def get_player():
     player1 = Cards(get_suit(), get_value())
     player2 = Cards(get_suit(), get_value())
-    player_value = int(player1.card_num) + int(player2.card_num)
+    p1 = player1.card_num()
+    p2 = player2.card_num()
     screen.blit(player1.image, (PLAYERx - card_size, PLAYERy))
     screen.blit(player2.image, (PLAYERx, PLAYERy))
-    pygame.display.flip()
-    return player_value
+    return p1 + p2
 
 def get_winner(house_value, player_value):
     if player_value == 21:
