@@ -34,9 +34,42 @@ def draw_background(screen):
     screen.blit(player_text, (WIDTH/2 - player_text.get_width()/2, 550))
     screen.blit(house_text, (WIDTH/2 - house_text.get_width()/2, 50))
 
-def show_house():
+def get_house():
     house1 = Cards(get_suit(), get_value())
     house2 = Cards(get_suit(), get_value())
+    house_value = int(house1.card_num) + int(house2.card_num)
     screen.blit(house1.image, (HOUSEx - card_size, HOUSEy))
     screen.blit(cardback, (HOUSEx, HOUSEy))
     pygame.display.flip()
+    return house_value
+
+def get_player():
+    player1 = Cards(get_suit(), get_value())
+    player2 = Cards(get_suit(), get_value())
+    player_value = int(player1.card_num) + int(player2.card_num)
+    screen.blit(player1.image, (PLAYERx - card_size, PLAYERy))
+    screen.blit(player2.image, (PLAYERx, PLAYERy))
+    pygame.display.flip()
+    return player_value
+
+def get_winner(house_value, player_value):
+    if player_value == 21:
+        if house_value != 21:
+            winner = 'player'
+        elif house_value == 21:
+            winner = 'push'
+    elif player_value < 21:
+        if house_value > 21:
+            winner = 'player'
+        elif house_value < player_value:
+            winner = 'player'
+        elif house_value > player_value:
+            winner = 'house'
+        elif house_value == player_value:
+            winner = 'push'
+    else:
+        if house_value <= 21:
+            winner = 'house'
+        else:
+            winner = 'push'
+    return winner
