@@ -8,3 +8,6 @@ HOUSEx = WIDTH/2
 HOUSEy = 90
 PLAYERx = WIDTH/2
 PLAYERy = 510
+
+score = 20
+bet = 5

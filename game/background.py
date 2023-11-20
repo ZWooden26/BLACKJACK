@@ -37,42 +37,13 @@ def draw_background(screen):
     screen.blit(player_text, (WIDTH/2 - player_text.get_width()/2, 550))
     screen.blit(house_text, (WIDTH/2 - house_text.get_width()/2, 50))
 
-def get_house():
-    house1 = Cards(get_suit(), get_value())
-    house2 = Cards(get_suit(), get_value())
-    h1 = house1.card_num()
-    h2 = house2.card_num()
-    screen.blit(house1.image, (HOUSEx - card_size, HOUSEy))
-    screen.blit(cardback, (HOUSEx, HOUSEy))
-    return h1 + h2
+# create game-over screen
+def game_over():
+    table = pygame.image.load('../Assets/table1.jpg').convert()
+    text_font = pygame.font.Font('../Assets/Marlboro.ttf', 100)
+    over_text = text_font.render("BIG WINNER!", True, (0, 0, 0))
+    final_score_text = text_font.render(f"${score}", True, (0, 0, 0))
 
-def get_player():
-    player1 = Cards(get_suit(), get_value())
-    player2 = Cards(get_suit(), get_value())
-    p1 = player1.card_num()
-    p2 = player2.card_num()
-    screen.blit(player1.image, (PLAYERx - card_size, PLAYERy))
-    screen.blit(player2.image, (PLAYERx, PLAYERy))
-    return p1 + p2
-
-def get_winner(house_value, player_value):
-    if player_value == 21:
-        if house_value != 21:
-            winner = 'player'
-        elif house_value == 21:
-            winner = 'push'
-    elif player_value < 21:
-        if house_value > 21:
-            winner = 'player'
-        elif house_value < player_value:
-            winner = 'player'
-        elif house_value > player_value:
-            winner = 'house'
-        elif house_value == player_value:
-            winner = 'push'
-    else:
-        if house_value <= 21:
-            winner = 'house'
-        else:
-            winner = 'push'
-    return winner
+    screen.blit(table, (0, 0))
+    screen.blit(over_text, (WIDTH/2 - over_text.get_width()/2, HEIGHT/2))
+    screen.blit(final_score_text, (WIDTH/2 - final_score_text.get_width()/2, HEIGHT/2 + 100))
