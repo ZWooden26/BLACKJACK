@@ -19,27 +19,28 @@ running = True
 background = screen.copy()
 draw_background(background)
 
-while running:
-    screen.blit(background, (0, 0))
-    x = 0
+def get_event():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            running = False
+            return 'quit'
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                x = 1
+                return 'space'
             elif event.key == pygame.K_q:
-                x = 2
+                return 'q'
 
-    if x == 1:
+
+while True:
+    screen.blit(background, (0, 0))
+    event = get_event()
+    if event == 'quit':
+        pygame.quit()
+        sys.exit()
+    elif event == 'space':
         get_house()
         get_player()
-    elif x == 2:
+    elif event == 'q':
         game_over()
-    else:
-        pass
 
     pygame.display.flip()
-
-pygame.quit()
-sys.exit()
+    pygame.time.Clock().tick(45)

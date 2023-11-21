@@ -7,7 +7,7 @@ chip_size = 32
 HOUSEx = WIDTH/2
 HOUSEy = 90
 PLAYERx = WIDTH/2
-PLAYERy = 510
+PLAYERy = 450
 
 score = 20
 bet = 5
