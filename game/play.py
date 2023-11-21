@@ -37,8 +37,14 @@ while True:
         pygame.quit()
         sys.exit()
     elif event == 'space':
-        get_house()
-        get_player()
+        showcards = True
+        while showcards: # andrew helped here
+            for i in range (1):
+                get_house()
+                get_player()
+            pygame.display.flip()
+            pygame.time.Clock().tick(20)
+
     elif event == 'q':
         game_over()
 
