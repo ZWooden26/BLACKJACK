@@ -79,7 +79,7 @@ def add_card():
 def get_winner(house_value, player_value):
     if player_value == 21:
         if house_value != 21:
-            winner = 'player'
+            winner = 'blackjack'
         elif house_value == 21:
             winner = 'push'
     elif player_value < 21:
@@ -97,3 +97,11 @@ def get_winner(house_value, player_value):
         else:
             winner = 'push'
     return winner
+
+def get_score(score, bet, winner):
+    if winner == 'blackjack':
+        score += (bet * 3)
+    elif winner == 'player':
+        score += (bet * 2)
+    elif winner == 'push':
+        score += bet

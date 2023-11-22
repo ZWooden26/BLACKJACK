@@ -3,7 +3,7 @@ import sys
 import time
 from parameters import *
 from background import draw_background, game_over
-from cards import Cards, get_winner, get_house, get_player, add_card
+from cards import Cards, get_winner, get_house, get_player, add_card, get_score
 
 # initialize
 pygame.init()
@@ -86,8 +86,11 @@ while True:
 
     elif event == 'cashout':
         over = True
+        #winner = get_winner(house[-1], newsum)
+        #final = get_score(score, 5, winner)
+        #score_text =
         while over:
-            game_over(score=20)
+            game_over(score)
             pygame.display.flip()
             event = get_event()
             if event:
