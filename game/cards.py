@@ -11,6 +11,7 @@ cardback = pygame.image.load('../Assets/cards/card_back.png').convert()
 values = ['02', '03', '04', '05', '06', '07', '08', '09', '10', 'J', 'Q', 'K', 'A']
 suits = ['clubs', 'diamonds', 'spades', 'hearts']
 
+
 # random card generator
 def get_value():
     num = random.randint(0, len(values)-1)
@@ -30,7 +31,7 @@ class Cards(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
     def card_num(self):
-        if self.value == 'J' or 'Q' or 'K':
+        if self.value == 'J' or self.value == 'Q' or self.value == 'K':
             card_number = 10
         elif self.value == 'A':
             card_number = 11
@@ -55,6 +56,7 @@ def get_house():
     house = (house1, house2, htotal)
     return house
 
+
 # generate player cards
 def get_player():
     player1 = Cards(get_suit(), get_value())
@@ -65,11 +67,13 @@ def get_player():
     player = (player1, player2, ptotal)
     return player
 
+
 def add_card():
     new_card = Cards(get_suit(), get_value())
     val = new_card.card_num()
     new = (new_card, val)
     return new
+
 
 # evaluate player vs house to determine payout
 def get_winner(house_value, player_value):

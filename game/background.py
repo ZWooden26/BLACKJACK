@@ -7,6 +7,7 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 cardback = pygame.image.load('../Assets/cards/card_back.png').convert()
 
+
 def draw_background(screen):
     # initializing images and fonts
     table = pygame.image.load('../Assets/table1.jpg').convert()
@@ -37,8 +38,9 @@ def draw_background(screen):
     screen.blit(player_text, (WIDTH/2 - player_text.get_width()/2, 550))
     screen.blit(house_text, (WIDTH/2 - house_text.get_width()/2, 50))
 
+
 # create game-over screen
-def game_over():
+def game_over(score):
     table = pygame.image.load('../Assets/table1.jpg').convert()
     text_font = pygame.font.Font('../Assets/Marlboro.ttf', 100)
     over_text = text_font.render("BIG WINNER!", True, (0, 0, 0))
