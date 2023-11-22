@@ -38,6 +38,9 @@ class Cards(pygame.sprite.Sprite):
             card_number = int(self.value)
         return card_number
 
+    def show_card(self, x, y):
+        screen.blit(self.image, (x, y))
+
 
 cards = pygame.sprite.Group()
 
@@ -48,10 +51,9 @@ def get_house():
     house2 = Cards(get_suit(), get_value())
     h1 = house1.card_num()
     h2 = house2.card_num()
-    screen.blit(house1.image, (HOUSEx - card_size, HOUSEy))
-    screen.blit(cardback, (HOUSEx, HOUSEy))
-    return h1 + h2
-
+    htotal = h1 + h2
+    house = (house1, house2, htotal)
+    return house
 
 # generate player cards
 def get_player():
@@ -59,10 +61,15 @@ def get_player():
     player2 = Cards(get_suit(), get_value())
     p1 = player1.card_num()
     p2 = player2.card_num()
-    screen.blit(player1.image, (PLAYERx - card_size, PLAYERy))
-    screen.blit(player2.image, (PLAYERx, PLAYERy))
-    return p1 + p2
+    ptotal = p1 + p2
+    player = (player1, player2, ptotal)
+    return player
 
+def add_card():
+    new_card = Cards(get_suit(), get_value())
+    val = new_card.card_num()
+    new = (new_card, val)
+    return new
 
 # evaluate player vs house to determine payout
 def get_winner(house_value, player_value):

@@ -3,7 +3,7 @@ import sys
 import time
 from parameters import *
 from background import draw_background, game_over
-from cards import get_suit, get_value, Cards, get_winner, get_house, get_player
+from cards import Cards, get_winner, get_house, get_player, add_card
 
 # initialize
 pygame.init()
@@ -38,12 +38,19 @@ while True:
         sys.exit()
     elif event == 'space':
         showcards = True
-        while showcards: # andrew helped here
-            for i in range (1):
-                get_house()
-                get_player()
+        house = get_house()
+        player = get_player()
+
+        while showcards:
+            # continuously blit cards, Andrew Galvan-Arrien helped me with this code
+            house[0].show_card(HOUSEx - card_size, HOUSEy)
+            house[1].show_card(HOUSEx, HOUSEy)
+            player[0].show_card(PLAYERx - card_size, PLAYERy)
+            player[1].show_card(PLAYERx, PLAYERy)
             pygame.display.flip()
-            pygame.time.Clock().tick(20)
+            event = get_event()
+            if event:
+                showcards = False
 
     elif event == 'q':
         game_over()
