@@ -10,4 +10,4 @@ PLAYERx = WIDTH/2
 PLAYERy = 450
 
 score = 20
-bet = 5
+bet = 0

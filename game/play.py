@@ -51,6 +51,32 @@ while True:
         pygame.quit()
         sys.exit()
 
+    elif event == 'raise':
+        bet += 5
+        score -= 5
+        if score < 0:
+            score = 0
+            bet -= 5
+        bet_text = text_font.render(f'{bet}', True, (0, 40, 0))
+        score_text = text_font.render(f'{score}', True, (0, 40, 0))
+        screen.blit(bet_text, (150, HEIGHT - 75))
+        screen.blit(score_text, (WIDTH - 200, HEIGHT - 75))
+        pygame.display.update(150, HEIGHT - 75, bet_text.get_width(), bet_text.get_height())
+        pygame.display.update(WIDTH - 200, HEIGHT - 75, score_text.get_width() + 15, score_text.get_height())
+
+    elif event == 'lower':
+        bet -= 5
+        score += 5
+        if bet < 0:
+            bet = 0
+            score -= 5
+        bet_text = text_font.render(f'{bet}', True, (0, 40, 0))
+        score_text = text_font.render(f'{score}', True, (0, 40, 0))
+        screen.blit(bet_text, (150, HEIGHT - 75))
+        screen.blit(score_text, (WIDTH - 200, HEIGHT - 75))
+        pygame.display.update(150, HEIGHT - 75, bet_text.get_width() + 15, bet_text.get_height())
+        pygame.display.update(WIDTH - 200, HEIGHT - 75, score_text.get_width() + 15, score_text.get_height())
+
     elif event == 'start':
         house = get_house()
         player = get_player()
@@ -71,8 +97,8 @@ while True:
         new = add_card()
         newsum = text_font.render(f"{player[-1] + new[1]}", True, (0, 40, 0))
         new[0].show_card(PLAYERx + card_size, PLAYERy)
-        screen.blit(newsum, (PLAYERx - player_hand.get_width() / 2, PLAYERy - player_hand.get_height()))
-        pygame.display.update(PLAYERx + card_size, PLAYERy, card_size , card_size)
+        screen.blit(newsum, (PLAYERx - newsum.get_width()/2, PLAYERy - newsum.get_height()))
+        pygame.display.update(PLAYERx + card_size, PLAYERy, card_size, card_size)
         pygame.display.update(PLAYERx - newsum.get_width()/2, PLAYERy - newsum.get_height(), newsum.get_width(), newsum.get_height())
         event = get_event()
 
@@ -88,5 +114,4 @@ while True:
             if event:
                 over = False
 
-    #pygame.display.flip()
     pygame.time.Clock().tick(45)
