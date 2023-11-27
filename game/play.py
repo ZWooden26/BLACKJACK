@@ -39,6 +39,8 @@ def get_event():
                 action = 'lower'
             elif event.key == pygame.K_s:
                 action = 'stay'
+            elif event.key == pygame.K_TAB:
+                action = 'start'
     return action
 
 
@@ -49,40 +51,30 @@ while True:
         pygame.quit()
         sys.exit()
 
-    elif event == 'hit':
-        showcards = True
+    elif event == 'start':
         house = get_house()
         player = get_player()
         house_hand = text_font.render(f"{house[-1]}", True, (0, 40, 0))
         player_hand = text_font.render(f"{player[-1]}", True, (0, 40, 0))
+        house[0].show_card(HOUSEx - card_size, HOUSEy)
+        screen.blit(cardback, (HOUSEx, HOUSEy))
+        player[0].show_card(PLAYERx - card_size, PLAYERy)
+        player[1].show_card(PLAYERx, PLAYERy)
+        # screen.blit(house_hand, (HOUSEx - house_hand.get_width() / 2, HOUSEy + card_size))
+        screen.blit(player_hand, (PLAYERx - player_hand.get_width() / 2, PLAYERy - player_hand.get_height()))
+        pygame.display.update(HOUSEx - card_size, HOUSEy - card_size / 2, card_size * 2, card_size * 2)
+        pygame.display.update(PLAYERx - card_size, PLAYERy, card_size * 2, card_size)
+        pygame.display.flip()
+        event = get_event()
 
-        while showcards:
-            # continuously blit cards, Andrew Galvan-Arrien helped me with this section of code
-            house[0].show_card(HOUSEx - card_size, HOUSEy)
-            screen.blit(cardback, (HOUSEx, HOUSEy))
-            player[0].show_card(PLAYERx - card_size, PLAYERy)
-            player[1].show_card(PLAYERx, PLAYERy)
-            screen.blit(house_hand, (HOUSEx - house_hand.get_width()/2, HOUSEy + card_size))
-            screen.blit(player_hand, (PLAYERx - player_hand.get_width()/2, PLAYERy - player_hand.get_height()))
-            pygame.display.flip()
-            pygame.time.Clock().tick(10)
-            event = get_event()
-            if event == 'hit':
-                running = True
-                new = add_card()
-                newsum = text_font.render(f"{player[-1] + new[1]}", True, (0, 40, 0))
-                while running:
-                    new[0].show_card(PLAYERx + card_size, PLAYERy)
-                    screen.blit(newsum, (PLAYERx - player_hand.get_width() / 2, PLAYERy - player_hand.get_height()))
-                    pygame.display.flip()
-                    event = get_event()
-                    if event:
-                        running = False
-            elif event == 'quit':
-                pygame.quit()
-                sys.exit()
-            elif event:
-                showcards = False
+    if event == 'hit':
+        new = add_card()
+        newsum = text_font.render(f"{player[-1] + new[1]}", True, (0, 40, 0))
+        new[0].show_card(PLAYERx + card_size, PLAYERy)
+        screen.blit(newsum, (PLAYERx - player_hand.get_width() / 2, PLAYERy - player_hand.get_height()))
+        pygame.display.update(PLAYERx + card_size, PLAYERy, card_size , card_size)
+        pygame.display.update(PLAYERx - newsum.get_width()/2, PLAYERy - newsum.get_height(), newsum.get_width(), newsum.get_height())
+        event = get_event()
 
     elif event == 'cashout':
         over = True
@@ -96,5 +88,5 @@ while True:
             if event:
                 over = False
 
-    pygame.display.flip()
+    #pygame.display.flip()
     pygame.time.Clock().tick(45)

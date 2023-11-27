@@ -24,8 +24,8 @@ def draw_background(screen):
         screen.blit(chip, (700, 500 - (2.5 * y)))
 
     # render and blit text on-screen
-    instructions = text_font.render("'ENTER' to hit\t'SPACE' to stay\t"
-                                    "UP arrow to raise\tDOWN arrow to decrease bet\t"
+    instructions = text_font.render("'TAB' to start\t'SPACE' to hit\t'S' to stay\t"
+                                    "UP arrow to raise\tDOWN arrow to lower\t"
                                     "'Q' to cash out",
                                     True, (0, 0, 0))
     bet_text = text_font.render("Bet:", True, (0, 0, 0))
