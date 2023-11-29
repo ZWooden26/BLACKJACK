@@ -16,9 +16,13 @@ clock = pygame.time.Clock()
 # fonts
 text_font = pygame.font.Font('../Assets/Marlboro.ttf', 20)
 
+# chip for blitting
+chip = pygame.image.load('../Assets/chip.png').convert()
+chip.set_colorkey((255, 255, 255))
+
 # ------- Main Loop -------
 cardback = pygame.image.load('../Assets/cards/card_back.png').convert()
-running = True
+hit = 0
 background = screen.copy()
 draw_background(background)
 
@@ -57,12 +61,18 @@ while True:
         if score < 0:
             score = 0
             bet -= 5
+        for x in range(bet):
+            screen.blit(chip, (WIDTH/2 + 100, HEIGHT/2 - (2.5*x)))
+        for x in range(score):
+            screen.blit(chip, (700, 500 - (2.5 * x)))
         bet_text = text_font.render(f'{bet}', True, (0, 40, 0))
         score_text = text_font.render(f'{score}', True, (0, 40, 0))
         screen.blit(bet_text, (150, HEIGHT - 75))
         screen.blit(score_text, (WIDTH - 200, HEIGHT - 75))
         pygame.display.update(150, HEIGHT - 75, bet_text.get_width(), bet_text.get_height())
         pygame.display.update(WIDTH - 200, HEIGHT - 75, score_text.get_width() + 15, score_text.get_height())
+        pygame.display.update(WIDTH/2 + 100, HEIGHT/2 - 100, chip_size, 100 + chip_size)
+        pygame.display.update(700, HEIGHT/2, chip_size, HEIGHT/2)
 
     elif event == 'lower':
         bet -= 5
@@ -70,12 +80,18 @@ while True:
         if bet < 0:
             bet = 0
             score -= 5
+        for x in range(bet):
+            screen.blit(chip, (WIDTH/2 + 100, HEIGHT/2 - (2.5*x)))
+        for x in range(score):
+            screen.blit(chip, (700, 500 - (2.5 * x)))
         bet_text = text_font.render(f'{bet}', True, (0, 40, 0))
         score_text = text_font.render(f'{score}', True, (0, 40, 0))
         screen.blit(bet_text, (150, HEIGHT - 75))
         screen.blit(score_text, (WIDTH - 200, HEIGHT - 75))
         pygame.display.update(150, HEIGHT - 75, bet_text.get_width() + 15, bet_text.get_height())
         pygame.display.update(WIDTH - 200, HEIGHT - 75, score_text.get_width() + 15, score_text.get_height())
+        pygame.display.update(WIDTH / 2 + 100, HEIGHT / 2 - 100, chip_size, 100 + chip_size)
+        pygame.display.update(700, HEIGHT / 2, chip_size, HEIGHT / 2)
 
     elif event == 'start':
         house = get_house()
@@ -94,15 +110,39 @@ while True:
         event = get_event()
 
     if event == 'hit':
+        hit += 1
+        event = get_event()
+
+    if hit == 1:
         new = add_card()
-        newsum = text_font.render(f"{player[-1] + new[1]}", True, (0, 40, 0))
+        value = player[-1] + new[1]
+        newsum = text_font.render(f"{value}", True, (0, 40, 0))
         new[0].show_card(PLAYERx + card_size, PLAYERy)
         screen.blit(newsum, (PLAYERx - newsum.get_width()/2, PLAYERy - newsum.get_height()))
         pygame.display.update(PLAYERx + card_size, PLAYERy, card_size, card_size)
-        pygame.display.update(PLAYERx - newsum.get_width()/2, PLAYERy - newsum.get_height(), newsum.get_width(), newsum.get_height())
-        event = get_event()
+        pygame.display.update(PLAYERx - newsum.get_width()/2, PLAYERy - newsum.get_height(), newsum.get_width(),
+                              newsum.get_height())
+    elif hit == 2:
+        new = add_card()
+        new2 = add_card()
+        value = player[-1] + new[1] + new2[1]
+        newsum = text_font.render(f"{value}", True, (0, 40, 0))
+        new[0].show_card(PLAYERx + card_size, PLAYERy)
+        new2[0].show_card(PLAYERx - (2*card_size), PLAYERy)
+        screen.blit(newsum, (PLAYERx - newsum.get_width() / 2, PLAYERy - newsum.get_height()))
+        pygame.display.update(PLAYERx + card_size, PLAYERy, card_size, card_size)
+        pygame.display.update(PLAYERx - (2*card_size), PLAYERy, card_size, card_size)
+        pygame.display.update(PLAYERx - newsum.get_width() / 2, PLAYERy - newsum.get_height(), newsum.get_width(),
+                              newsum.get_height())
+    elif hit == 3:
+        if value <= 21:
+            final = get_score(score, bet, 'player')
+
+        else:
+            final = get_score(score, bet, 'house')
 
     elif event == 'cashout':
+        hit = 0
         over = True
         #winner = get_winner(house[-1], newsum)
         #final = get_score(score, 5, winner)

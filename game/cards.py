@@ -100,8 +100,11 @@ def get_winner(house_value, player_value):
 
 def get_score(score, bet, winner):
     if winner == 'blackjack':
-        score += (bet * 3)
+        newscore = score + (bet * 3)
     elif winner == 'player':
-        score += (bet * 2)
+        newscore = score + (bet * 2)
     elif winner == 'push':
-        score += bet
+        newscore = score + bet
+    else:
+        newscore = score
+    return newscore

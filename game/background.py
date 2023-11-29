@@ -21,7 +21,6 @@ def draw_background(screen):
     screen.blit(table, (0, 0))
     for y in range(20):
         screen.blit(cardback, (WIDTH / 2 - card_size / 2, HEIGHT / 1.85 - (2 * y)))
-        screen.blit(chip, (700, 500 - (2.5 * y)))
 
     # render and blit text on-screen
     instructions = text_font.render("'TAB' to start\t'SPACE' to hit\t'S' to stay\t"
