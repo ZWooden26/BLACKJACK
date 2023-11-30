@@ -25,6 +25,10 @@ cardback = pygame.image.load('../Assets/cards/card_back.png').convert()
 hit = 0
 background = screen.copy()
 draw_background(background)
+player_values = []
+house_values = []
+new_cards = []
+new_house = []
 
 
 def get_event():
@@ -94,15 +98,23 @@ while True:
         pygame.display.update(700, HEIGHT / 2, chip_size, HEIGHT / 2)
 
     elif event == 'start':
+        # clear lists on re-start
+        player_values = []
+        house_values = []
+        new_cards = []
+        new_house = []
+
+        # fresh hands and blit on screen
         house = get_house()
         player = get_player()
-        house_hand = text_font.render(f"{house[-1]}", True, (0, 40, 0))
+        player_values.append(player[-1])
+        house_values.append(house[-1])
         player_hand = text_font.render(f"{player[-1]}", True, (0, 40, 0))
+        house_hand = text_font.render(f"{house[-1]}", True, (0, 40, 0))
         house[0].show_card(HOUSEx - card_size, HOUSEy)
         screen.blit(cardback, (HOUSEx, HOUSEy))
         player[0].show_card(PLAYERx - card_size, PLAYERy)
         player[1].show_card(PLAYERx, PLAYERy)
-        # screen.blit(house_hand, (HOUSEx - house_hand.get_width() / 2, HOUSEy + card_size))
         screen.blit(player_hand, (PLAYERx - player_hand.get_width() / 2, PLAYERy - player_hand.get_height()))
         pygame.display.update(HOUSEx - card_size, HOUSEy - card_size / 2, card_size * 2, card_size * 2)
         pygame.display.update(PLAYERx - card_size, PLAYERy, card_size * 2, card_size)
@@ -110,36 +122,43 @@ while True:
         event = get_event()
 
     if event == 'hit':
-        hit += 1
-        event = get_event()
-
-    if hit == 1:
+        # add cards to player hand and update value
         new = add_card()
-        value = player[-1] + new[1]
-        newsum = text_font.render(f"{value}", True, (0, 40, 0))
-        new[0].show_card(PLAYERx + card_size, PLAYERy)
-        screen.blit(newsum, (PLAYERx - newsum.get_width()/2, PLAYERy - newsum.get_height()))
-        pygame.display.update(PLAYERx + card_size, PLAYERy, card_size, card_size)
+        new_cards.append(new[0])
+        player_values.append(new[1])
+        newsum = text_font.render(f"{sum(player_values)}", True, (0, 40, 0))
+        screen.blit(newsum, (PLAYERx - newsum.get_width() / 2, PLAYERy - newsum.get_height()))
+        for x in range(len(new_cards)):
+            new_cards[x].show_card(PLAYERx + ((x+1) * card_size * ((-1)**(x))), PLAYERy)
+            pygame.display.update(PLAYERx + ((x+1) * card_size * ((-1)**(x))), PLAYERy, card_size, card_size)
         pygame.display.update(PLAYERx - newsum.get_width()/2, PLAYERy - newsum.get_height(), newsum.get_width(),
                               newsum.get_height())
-    elif hit == 2:
-        new = add_card()
-        new2 = add_card()
-        value = player[-1] + new[1] + new2[1]
-        newsum = text_font.render(f"{value}", True, (0, 40, 0))
-        new[0].show_card(PLAYERx + card_size, PLAYERy)
-        new2[0].show_card(PLAYERx - (2*card_size), PLAYERy)
-        screen.blit(newsum, (PLAYERx - newsum.get_width() / 2, PLAYERy - newsum.get_height()))
-        pygame.display.update(PLAYERx + card_size, PLAYERy, card_size, card_size)
-        pygame.display.update(PLAYERx - (2*card_size), PLAYERy, card_size, card_size)
-        pygame.display.update(PLAYERx - newsum.get_width() / 2, PLAYERy - newsum.get_height(), newsum.get_width(),
-                              newsum.get_height())
-    elif hit == 3:
-        if value <= 21:
-            final = get_score(score, bet, 'player')
+        event = get_event()
 
+    elif event == 'stay':
+        # show house and hit on any value less than 17
+        house[1].show_card(HOUSEx, HOUSEy)
+        screen.blit(house_hand, (HOUSEx - house_hand.get_width() / 2, HOUSEy + card_size))
+        pygame.display.update(HOUSEx, HOUSEy, card_size, card_size)
+        pygame.display.update(HOUSEx - house_hand.get_width() / 2, HOUSEy + card_size, house_hand.get_width(),
+                              house_hand.get_height())
+        pygame.time.Clock().tick(5)
+        if sum(house_values) < 17:
+            new = add_card()
+            new_house.append(new[0])
+            house_values.append(new[1])
+            newsum = text_font.render(f"{sum(house_values)}", True, (0, 40, 0))
+            screen.blit(newsum, (HOUSEx - newsum.get_width() / 2, HOUSEy + card_size))
+            for x in range(len(new_house)):
+                new_house[x].show_card(HOUSEx + ((x + 1) * card_size * ((-1) ** (x))), HOUSEy)
+                pygame.display.update(HOUSEx + ((x + 1) * card_size * ((-1) ** (x))), HOUSEy, card_size, card_size)
+            pygame.display.update(HOUSEx - newsum.get_width() / 2, HOUSEy + card_size, newsum.get_width(),
+                                  newsum.get_height())
+            pygame.time.Clock().tick(5)
         else:
-            final = get_score(score, bet, 'house')
+            pass
+
+        event = get_event()
 
     elif event == 'cashout':
         hit = 0
