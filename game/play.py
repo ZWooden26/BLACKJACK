@@ -48,6 +48,8 @@ def get_event():
             elif event.key == pygame.K_s:
                 action = 'stay'
             elif event.key == pygame.K_TAB:
+                action = 'deal'
+            elif event.key == pygame.K_BACKSPACE:
                 action = 'start'
     return action
 
@@ -98,6 +100,9 @@ while True:
         pygame.display.update(700, HEIGHT / 2, chip_size, HEIGHT / 2)
 
     elif event == 'start':
+        pygame.display.flip()
+
+    elif event == 'deal':
         # clear lists on re-start
         player_values = []
         house_values = []
@@ -118,7 +123,7 @@ while True:
         screen.blit(player_hand, (PLAYERx - player_hand.get_width() / 2, PLAYERy - player_hand.get_height()))
         pygame.display.update(HOUSEx - card_size, HOUSEy - card_size / 2, card_size * 2, card_size * 2)
         pygame.display.update(PLAYERx - card_size, PLAYERy, card_size * 2, card_size)
-        pygame.display.flip()
+        #pygame.display.flip()
         event = get_event()
 
     if event == 'hit':
@@ -142,7 +147,7 @@ while True:
         pygame.display.update(HOUSEx, HOUSEy, card_size, card_size)
         pygame.display.update(HOUSEx - house_hand.get_width() / 2, HOUSEy + card_size, house_hand.get_width(),
                               house_hand.get_height())
-        pygame.time.Clock().tick(.5)
+        pygame.time.Clock().tick(1)
         if sum(house_values) < 17:
             new = add_card()
             new_house.append(new[0])
@@ -154,23 +159,26 @@ while True:
                 pygame.display.update(HOUSEx + ((x + 1) * card_size * ((-1) ** (x))), HOUSEy, card_size, card_size)
             pygame.display.update(HOUSEx - newsum.get_width() / 2, HOUSEy + card_size, newsum.get_width(),
                                   newsum.get_height())
-            pygame.time.Clock().tick(.5)
+            pygame.time.Clock().tick(1)
         else:
             pass
 
+        winner = get_winner(sum(house_values), sum(player_values))
+        final_score = get_score(score, bet, winner)
+        score_text = text_font.render(f'{final_score}', True, (0, 40, 0))
+        screen.blit(score_text, (WIDTH - 200, HEIGHT - 75))
+        pygame.display.update(WIDTH - 200, HEIGHT - 75, score_text.get_width() + 15, score_text.get_height())
+        pygame.display.update(WIDTH / 2 + 100, HEIGHT / 2 - 100, chip_size, 100 + chip_size)
+        score = final_score
+        for x in range(score):
+            screen.blit(chip, (700, 500 - (2.5 * x)))
+            pygame.display.update(700, int(500 - (2.5 * x)), chip_size, chip_size)
+        bet = 0
+        pygame.display.update(150, HEIGHT - 75, bet_text.get_width() + 15, bet_text.get_height())
         event = get_event()
 
     elif event == 'cashout':
-        hit = 0
-        over = True
-        #winner = get_winner(house[-1], newsum)
-        #final = get_score(score, 5, winner)
-        #score_text =
-        while over:
-            game_over(score)
-            pygame.display.flip()
-            event = get_event()
-            if event:
-                over = False
+        game_over(score)
+        pygame.display.flip()
 
     pygame.time.Clock().tick(45)

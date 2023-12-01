@@ -39,7 +39,7 @@ def draw_background(screen):
 
 
 # create game-over screen
-def game_over(score):
+def game_over(score=20):
     table = pygame.image.load('../Assets/table1.jpg').convert()
     text_font = pygame.font.Font('../Assets/Marlboro.ttf', 100)
     over_text = text_font.render("BIG WINNER!", True, (0, 0, 0))
