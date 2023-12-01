@@ -142,7 +142,7 @@ while True:
         pygame.display.update(HOUSEx, HOUSEy, card_size, card_size)
         pygame.display.update(HOUSEx - house_hand.get_width() / 2, HOUSEy + card_size, house_hand.get_width(),
                               house_hand.get_height())
-        pygame.time.Clock().tick(5)
+        pygame.time.Clock().tick(.5)
         if sum(house_values) < 17:
             new = add_card()
             new_house.append(new[0])
@@ -154,7 +154,7 @@ while True:
                 pygame.display.update(HOUSEx + ((x + 1) * card_size * ((-1) ** (x))), HOUSEy, card_size, card_size)
             pygame.display.update(HOUSEx - newsum.get_width() / 2, HOUSEy + card_size, newsum.get_width(),
                                   newsum.get_height())
-            pygame.time.Clock().tick(5)
+            pygame.time.Clock().tick(.5)
         else:
             pass
 
