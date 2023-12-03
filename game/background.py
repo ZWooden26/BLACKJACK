@@ -1,6 +1,5 @@
 import pygame
 from parameters import *
-from cards import Cards, get_suit, get_value
 
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))

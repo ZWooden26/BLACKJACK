@@ -6,6 +6,7 @@ pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 cardback = pygame.image.load('../Assets/cards/card_back.png').convert()
+chips = pygame.mixer.Sound('../Assets/coins.wav')
 
 # lists of all possible values and suits to choose from
 values = ['02', '03', '04', '05', '06', '07', '08', '09', '10', 'J', 'Q', 'K', 'A']

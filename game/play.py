@@ -1,9 +1,8 @@
 import pygame
 import sys
-import time
 from parameters import *
 from background import draw_background, game_over
-from cards import Cards, get_winner, get_house, get_player, add_card, get_score
+from cards import get_winner, get_house, get_player, add_card, get_score
 
 # initialize
 pygame.init()
@@ -11,7 +10,11 @@ pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Blackjack")
 clock = pygame.time.Clock()
+
 # sounds
+music = pygame.mixer.Sound('../Assets/background music.mp3')
+chips = pygame.mixer.Sound('../Assets/coins.wav')
+cards = pygame.mixer.Sound('../Assets/card.mp3')
 
 # fonts
 text_font = pygame.font.Font('../Assets/Marlboro.ttf', 20)
@@ -58,9 +61,15 @@ def get_event():
     return action
 
 
+# play background music
+pygame.mixer.Sound.play(music, 10)
+
 while True:
+    # always retrieve events
     event = get_event()
     screen.blit(background, (0, 0))
+
+    # actions based on events
     if previous == None:
         pygame.display.flip()
         previous = 'start'
@@ -157,6 +166,7 @@ while True:
     elif event == 'hit':
         # restrict usage
         if previous == 'deal' or previous == 'hit':
+            pygame.mixer.Sound.play(cards)
             # add cards to player hand and update value
             new = add_card()
             new_cards.append(new[0])
@@ -218,6 +228,9 @@ while True:
 
             # compare player and house values, determine winner, and update screen to reflect game outcome
             winner = get_winner(sum(house_values), sum(player_values))
+            # play music for winner
+            if winner == 'player' or winner == 'blackjack':
+                pygame.mixer.Sound.play(chips)
             final_score = get_score(score, bet, winner)
             score_text = text_font.render(f'{final_score}', True, (0, 40, 0), (255, 255, 255))
             screen.blit(score_text, (WIDTH - 200, HEIGHT - 75))
