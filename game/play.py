@@ -15,6 +15,7 @@ clock = pygame.time.Clock()
 
 # fonts
 text_font = pygame.font.Font('../Assets/Marlboro.ttf', 20)
+title_font = pygame.font.Font('../Assets/Trocadero.ttf', 30)
 
 # chip for blitting and table piece
 chip = pygame.image.load('../Assets/chip.png').convert()
@@ -58,8 +59,12 @@ def get_event():
 
 
 while True:
-    screen.blit(background, (0, 0))
     event = get_event()
+    screen.blit(background, (0, 0))
+    if previous == None:
+        pygame.display.flip()
+        previous = 'start'
+
     if event == 'quit':
         # exit pygame
         pygame.quit()
@@ -114,6 +119,8 @@ while True:
             pass
 
     elif event == 'start':
+        # display main game screen
+        screen.blit(background, (0, 0))
         pygame.display.flip()
         previous = 'start'
 
@@ -222,11 +229,13 @@ while True:
                 pygame.display.update(700, int(500 - (2.5 * x)), chip_size, chip_size)
             bet = 0
             pygame.display.update(150, HEIGHT - 75, bet_text.get_width() + 15, bet_text.get_height())
+            previous = 'stay'
 
             # game over if you have no money left
             if score == 0:
-                event = 'cashout'
-            previous = 'stay'
+                game_over(score)
+                pygame.display.flip()
+                previous = 'cashout'
         else:
             pass
 
