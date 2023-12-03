@@ -3,6 +3,7 @@ import sys
 from parameters import *
 from background import draw_background, game_over
 from cards import get_winner, get_house, get_player, add_card, get_score
+from secret import easter_egg
 
 # initialize
 pygame.init()
@@ -58,6 +59,8 @@ def get_event():
                 action = 'deal'
             elif event.key == pygame.K_BACKSPACE:
                 action = 'start'
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            action = 'free money'
     return action
 
 
@@ -259,5 +262,12 @@ while True:
             game_over(score)
             pygame.display.flip()
             previous = 'cashout'
+            event = get_event()
         else:
             pass
+
+    elif event == 'free money':
+        easter_egg()
+        pygame.time.Clock().tick(2)
+        game_over(1000)
+        pygame.display.flip()
