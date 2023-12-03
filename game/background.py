@@ -23,7 +23,7 @@ def draw_background(screen):
         screen.blit(cardback, (WIDTH / 2 - card_size / 2, HEIGHT / 1.85 - (2 * y)))
 
     # render and blit text on-screen
-    instructions = text_font.render("'TAB' to start\t'SPACE' to hit\t'S' to stay\t"
+    instructions = text_font.render("'TAB' to deal\t'SPACE' to hit\t'S' to stay\t"
                                     "UP arrow to raise\tDOWN arrow to lower\t"
                                     "'Q' to cash out",
                                     True, (0, 0, 0))
