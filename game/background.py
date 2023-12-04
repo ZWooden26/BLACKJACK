@@ -25,7 +25,7 @@ def draw_background(screen):
     instructions = text_font.render("'TAB' to deal\t'SPACE' to hit\t'S' to stay\t"
                                     "UP arrow to raise\tDOWN arrow to lower\t"
                                     "'Q' to cash out",
-                                    True, (0, 0, 0))
+                                    True, (255, 255, 255))
     bet_text = text_font.render("Bet:", True, (0, 0, 0))
     score_text = text_font.render("Score:", True, (0, 0, 0))
     player_text = names_font.render("Player", True, (75, 0, 0))
