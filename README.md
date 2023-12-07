@@ -1,6 +1,6 @@
 # BLACKJACK
 Blackjack is a classic casino card game, in which each player (if there are multiple) is competing against the house to win money, and the rules are as follows:
-1. To join the game, a player must throw chips (money) into the pot.  To do this, simply raise or lower your bet using the up and down arrows.
+1. To join the game, a player must throw chips (money) into the pot.  To do this, simply raise or lower your bet using the up and down arrows.  You can go ALL IN by pressing 0.
 2. Once you have set your bet, you cannot change it until a result has been decided, so bet carefully.
 3. Cards can now be dealt, two to each player and two to the house.  House cards are shown one face down and one face up, but player cards are both face up.  To deal cards, hit TAB.
 4. Once you see your cards, decide if you want to HIT (space) or STAY ("s").  The goal is to beat the house's hand (have a greater cad value) without going over 21.
