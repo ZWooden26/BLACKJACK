@@ -59,6 +59,8 @@ def get_event():
                 action = 'deal'
             elif event.key == pygame.K_BACKSPACE:
                 action = 'start'
+            elif event.key == pygame.K_0:
+                action = 'all in'
         elif event.type == pygame.MOUSEBUTTONDOWN:
             action = 'free money'
     return action
@@ -82,6 +84,26 @@ while True:
         pygame.quit()
         sys.exit()
 
+    elif event == 'all in':
+        if previous == 'raise' or previous == 'lower' or previous == 'start' or previous == 'stay':
+            bet += score
+            score = 0
+            for x in range(bet):
+                screen.blit(chip, (WIDTH / 2 + 100, HEIGHT / 2 - (2.5 * x)))
+            for x in range(score):
+                screen.blit(chip, (700, 500 - (2.5 * x)))
+            bet_text = text_font.render(f'{bet}', True, (0, 40, 0), (255, 255, 255))
+            score_text = text_font.render(f'{score}', True, (0, 40, 0), (255, 255, 255))
+            screen.blit(bet_text, (150, HEIGHT - 75))
+            screen.blit(score_text, (WIDTH - 200, HEIGHT - 75))
+            pygame.display.update(150, HEIGHT - 75, bet_text.get_width(), bet_text.get_height())
+            pygame.display.update(WIDTH - 200, HEIGHT - 75, score_text.get_width() + 15, score_text.get_height())
+            pygame.display.update(WIDTH / 2 + 100, 0, chip_size, HEIGHT/2 + 100)
+            pygame.display.update(700, 0, chip_size, HEIGHT)
+            previous = 'raise'
+        else:
+            pass
+
     elif event == 'raise':
         # restrict usage to only when appropriate
         if previous == 'raise' or previous == 'lower' or previous == 'start' or previous == 'stay':
@@ -100,8 +122,8 @@ while True:
             screen.blit(score_text, (WIDTH - 200, HEIGHT - 75))
             pygame.display.update(150, HEIGHT - 75, bet_text.get_width(), bet_text.get_height())
             pygame.display.update(WIDTH - 200, HEIGHT - 75, score_text.get_width() + 15, score_text.get_height())
-            pygame.display.update(WIDTH/2 + 100, HEIGHT/2 - 100, chip_size, 100 + chip_size)
-            pygame.display.update(700, HEIGHT/2, chip_size, HEIGHT/2)
+            pygame.display.update(WIDTH / 2 + 100, 0, chip_size, HEIGHT / 2 + 100)
+            pygame.display.update(700, 0, chip_size, HEIGHT)
             previous = 'raise'
         else:
             pass
@@ -124,8 +146,8 @@ while True:
             screen.blit(score_text, (WIDTH - 200, HEIGHT - 75))
             pygame.display.update(150, HEIGHT - 75, bet_text.get_width() + 15, bet_text.get_height())
             pygame.display.update(WIDTH - 200, HEIGHT - 75, score_text.get_width() + 15, score_text.get_height())
-            pygame.display.update(WIDTH / 2 + 100, HEIGHT / 2 - 100, chip_size, 100 + chip_size)
-            pygame.display.update(700, HEIGHT / 2, chip_size, HEIGHT / 2)
+            pygame.display.update(WIDTH / 2 + 100, 0, chip_size, HEIGHT / 2 + 100)
+            pygame.display.update(700, 0, chip_size, HEIGHT)
             previous = 'lower'
         else:
             pass
