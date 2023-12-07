@@ -10,6 +10,7 @@ Blackjack is a classic casino card game, in which each player (if there are mult
 8. Traditionally, the house must hit on any value less than 17, which is the same in this iteration.
 9. If the player wins they get paid out 2:1 their original bet, if they hit blackjack (value = 21) they get paid out 3:1, if they tie the payout is 1:1, and if you lose your money is gone.
 10. If you are a smart gambler, you will cashout ("q") while you're ahead.  Have fun!
+11. After cashing out, if you would like to return to your seat at the table, simply press BACKSPACE.
 
 ---- credits ----
 - Sean Milanette helped me come up with some of the graphics and the gameplay functions, such as moving chips between the player's stack and the pot.
